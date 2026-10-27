@@ -1,0 +1,23 @@
+@model List<TaskManager.Web.Models.TaskItem>
+
+@{
+    ViewData[index: "Title"] = "Tasks";
+}
+
+<h1>My Tasks</h1>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Due Date</th>
+        <th>Completed</th>
+    </tr>
+
+    @foreach(var task in Model)
+    {
+        <tr>
+            <td>@task.Title</td>
+            <td>@task.DueDate?.ToString("MM/dd/yy")</td>
+            <td>@task.IsCompleted</td>
+        </tr>
+    }
+</table>
