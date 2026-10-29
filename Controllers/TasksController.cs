@@ -16,4 +16,21 @@ public class TasksController : Controller
         var tasks = _context.Tasks.ToList();
         return View(tasks);
     }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(TaskItem task)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(task);
+        }
+        _context.Tasks.Add(task);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 }
