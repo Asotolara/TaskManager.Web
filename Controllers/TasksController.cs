@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManager.Web.Data;
 using Microsoft.Extensions.Validation;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 public class TasksController : Controller
 {
@@ -56,6 +58,30 @@ public class TasksController : Controller
         }
 
         _context.Tasks.Update(task);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Delete(int id)
+    {
+        var task = _context.Tasks.Find(id);
+        if(task is null)
+        {
+            return NotFound();
+        }
+
+        return View(task);
+    }
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var task = _context.Tasks.Find(id);
+        if(task is null)
+        {
+            return NotFound();
+        }
+
+        _context.Tasks.Remove(task);
         _context.SaveChanges();
         return RedirectToAction("Index");
     }

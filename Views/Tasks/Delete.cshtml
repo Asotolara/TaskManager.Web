@@ -1,0 +1,14 @@
+@model TaskManager.Web.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete Task</h1>
+<p>Are you sure you want to delete this task?: <strong>@Model.Title</strong> </p>
+
+<form asp-controller="Tasks" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>

@@ -15,10 +15,12 @@
     @foreach(var task in Model)
     {
         <tr>
-            <td><a asp-action="Edit" asp-route-id="@task.Id">Edit</a></td>
+            
             <td>@task.Title</td>
             <td>@task.DueDate?.ToString("MM/dd/yy")</td>
             <td>@task.IsCompleted</td>
+            <td><a asp-action="Delete" asp-route-id="@task.Id">Delete</a></td>
+            <td><a asp-action="Edit" asp-route-id="@task.Id">Edit</a></td>
         </tr>
     }
 </table>
