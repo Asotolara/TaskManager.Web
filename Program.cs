@@ -25,6 +25,13 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.Use(async (HttpContext context, Func<Task> next) =>
+{
+    Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
+    await next();   // pass the request to the next middleware
+    Console.WriteLine($"Response status: {context.Response.StatusCode}");
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")

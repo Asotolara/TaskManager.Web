@@ -5,11 +5,14 @@
 }
 
 <h1>My Tasks</h1>
+<a asp-action="Create">Create New Task</a>
 <table>
     <tr>
         <th>Title</th>
         <th>Due Date</th>
         <th>Completed</th>
+        <th>Delete</th>
+        <th>Edit</th>
     </tr>
 
     @foreach(var task in Model)
