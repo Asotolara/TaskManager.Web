@@ -5,7 +5,9 @@ using Microsoft.Extensions.Validation;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class TasksController : Controller
 {
 
