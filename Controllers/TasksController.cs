@@ -23,6 +23,7 @@ public class TasksController : Controller
         return View(tasks);
     }
 
+[HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -40,6 +41,7 @@ public class TasksController : Controller
         return RedirectToAction("Index");
     }
     
+    [HttpGet]
     public IActionResult Edit(int id)
     {
         var task = _context.Tasks.Find(id);
@@ -64,6 +66,7 @@ public class TasksController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpGet]
     public IActionResult Delete(int id)
     {
         var task = _context.Tasks.Find(id);
