@@ -18,6 +18,7 @@ public class TasksController : Controller
     {
         _context = context;
     }
+    
     public IActionResult Index()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -25,7 +26,15 @@ public class TasksController : Controller
         return View(tasks);
     }
 
-[HttpGet]
+    private TaskItem? FindOwnedTask(int id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var task = _context.Tasks.Find(id);
+
+        return task is not null && task.OwnerId == userId ? task : null;
+    }
+
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -48,7 +57,7 @@ public class TasksController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var task = _context.Tasks.Find(id);
+        var task = FindOwnedTask(id);
         if(task is null)
         {
             return NotFound();
@@ -57,15 +66,26 @@ public class TasksController : Controller
         
         return View(task);
     }
+
     [HttpPost]
     public IActionResult Edit(TaskItem task)
     {
+        var currTask = FindOwnedTask(task.Id);
+        
+        if(currTask is null)
+        {
+            return NotFound();
+        }
+
         if (!ModelState.IsValid)
         {
             return View(task);
         }
 
-        _context.Tasks.Update(task);
+        currTask.Title = task.Title;
+        currTask.DueDate = task.DueDate;
+        currTask.IsCompleted = task.IsCompleted;
+
         _context.SaveChanges();
         return RedirectToAction("Index");
     }
@@ -73,7 +93,7 @@ public class TasksController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var task = _context.Tasks.Find(id);
+        var task = FindOwnedTask(id);
         if(task is null)
         {
             return NotFound();
@@ -84,7 +104,7 @@ public class TasksController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteConfirmed(int id)
     {
-        var task = _context.Tasks.Find(id);
+        var task = FindOwnedTask(id);
         if(task is null)
         {
             return NotFound();

@@ -5,7 +5,8 @@ A task management web application built with ASP.NET Core MVC.
 ## Features
 - Users can register and log in (Cookkie-based authentication). 
 - Users are able to create, view, edit and delete tasks.
-- Server-side form validation
+- Server-side form validation.
+- Tasks are now per user.
 
 ## Technology
 - C# and ASP.NET Core MVC (.NET 10)
@@ -40,6 +41,5 @@ A task management web application built with ASP.NET Core MVC.
 5. Open the `localhost` URL shown in the terminal, register, and log in.
 
 ## Planned Improvement
-- Associate tasks with indiviual users
 - Projects and due-date filtering
 - REST API and React front end
