@@ -6,6 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 [Authorize]
 public class TasksController : Controller
@@ -19,7 +20,8 @@ public class TasksController : Controller
     }
     public IActionResult Index()
     {
-        var tasks = _context.Tasks.ToList();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var tasks = _context.Tasks.Where(t => t.OwnerId == userId).ToList();
         return View(tasks);
     }
 
@@ -36,6 +38,8 @@ public class TasksController : Controller
         {
             return View(task);
         }
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        task.OwnerId = userId;
         _context.Tasks.Add(task);
         _context.SaveChanges();
         return RedirectToAction("Index");

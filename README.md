@@ -19,6 +19,7 @@ A task management web application built with ASP.NET Core MVC.
 - Install the [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - Install Git
 
+### Run Locally
 1. Clone the repository:
     ```bash
     git clone https://github.com/Asotolara/TaskManager.Web.git
